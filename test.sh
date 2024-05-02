@@ -25,7 +25,7 @@ while true; do
     read -p "Новый порт SSH: " ssh_port
     if [[ "$ssh_port" =~ ^[0-9]+$ ]] && [ "$ssh_port" -ge 1024 ] && [ "$ssh_port" -le 65535 ]; then
         echo "Новый порт $ssh_port выбран для SSH."
-        sudo sed -i "s/Port $current_ssh_port/Port $ssh_port/" /etc/ssh/sshd_config
+        sudo sed -i "s/^#*Port .*/Port $ssh_port/" /etc/ssh/sshd_config
         sudo ufw allow $ssh_port/tcp
         sudo ufw delete allow $current_ssh_port/tcp
         sudo service ssh restart
