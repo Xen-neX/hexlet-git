@@ -35,6 +35,22 @@ while true; do
     fi
 done
 
+# Смена пароля для пользователя root
+echo "Теперь измените пароль для пользователя root."
+while true; do
+    read -s -p "Введите новый пароль для root: " root_password
+    echo
+    read -s -p "Подтвердите новый пароль для root: " root_password_confirm
+    echo
+    if [ "$root_password" == "$root_password_confirm" ]; then
+        echo "root:$root_password" | sudo chpasswd
+        echo "Пароль для пользователя root успешно изменён."
+        break
+    else
+        echo "Пароли не совпадают. Пожалуйста, попробуйте ещё раз."
+    fi
+done
+
 # Функция создания пользователя
 create_user() {
     echo "Правила для пароля: минимум 12 символов, включая хотя бы одну заглавную букву, одну строчную букву, одну цифру и один специальный символ."
